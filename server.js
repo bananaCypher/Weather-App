@@ -12,6 +12,11 @@ app.use(express.static('public'));
 var APIkey = '9a448cb3ffed441801362492ef3114d8';
 var units = 'metric';
 
+app.get('/', function(req, res){
+  res.redirect('/weather');
+});
+
+
 app.get('/weather', function(req, res){
   res.render('weather');
 });

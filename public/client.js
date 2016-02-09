@@ -35,23 +35,43 @@ var displayWeatherData = function(city){
     
   container.style.display = 'block';
   heading.innerText = city.data.name;
-  htmlString = "<p><img src='" + icon + "'><b>" + weather.main + "</b>, " + weather.description + "</p>";
-  htmlString += "<p>Wind speed: " + wind.speed + "</p>"
-  htmlString += "<table><thead><tr><th>Metric</th><th>Value</th></tr></thead>";
-  htmlString += "<tr><td>Temprature</td><td>" + main.temp + "</td></tr>";
-  htmlString += "<tr><td>Pressure</td><td>" + main.pressure + "</td></tr>";
-  htmlString += "<tr><td>Humidity</td><td>" + main.humidity + "</td></tr>";
-  htmlString += "</table>"
+  //trying not to make it look like ass, didn't really help much.
+  var htmlString = [
+    "<p><img src='" + icon + "'><b>" + weather.main + "</b> " + weather.description + "</p>",
+    "<table>",
+      "<thead>",
+        "<tr>",
+          "<th>Metric</th>",
+          "<th>Value</th>",
+        "</tr>",
+      "</thead",
+      "<tbody>",
+        "<tr>",
+          "<td>Temperature</td>",
+          "<td>" + main.temp + "&deg;C</td>",
+        "</tr>",
+        "<tr>",
+          "<td>Pressure</td>",
+          "<td>" + main.pressure + " hPa</td>",
+        "</tr>",
+        "<tr>",
+          "<td>Humidity</td>",
+          "<td>" + main.humidity + "%</td>",
+        "</tr>",
+      "</tbody",
+    "</table>"
+  ].join("\n");
   body.innerHTML = htmlString;
+
   var button = document.createElement('button');
-  if (JSON.parse(localStorage.getItem('city')) == city.data.name) {
+  if (localStorage.getItem('city') == city.data.name) {
       button.disabled = true;
       button.innerText = 'City has been saved';
       button.onclick = null;
   } else {
     button.innerText = 'Save city';
     button.onclick = function(){
-      localStorage.setItem('city', JSON.stringify(city.name)); 
+      localStorage.setItem('city', city.name); 
       button.disabled = true;
       button.innerText = 'City has been saved';
       button.onclick = null;
@@ -109,14 +129,16 @@ window.onload = function(){
   var input = document.getElementById('city-input');
   var loadButton = document.getElementById('quick-load');
   var localButton = document.getElementById('get-location');
+
   loadButton.onclick = function(){
-    cityName = JSON.parse(localStorage.getItem('city'));
+    cityName = localStorage.getItem('city');
     input.value = cityName;
     city = new City(cityName);
     city.getWeatherData(function(){
       displayWeatherData(city);
     });
   };
+
   form.onsubmit = function(event){
     event.preventDefault(); 
     city = new City(input.value);
