@@ -1,0 +1,18 @@
+<button id='quick-load'>Load saved city</button><button id='get-location'>Get local weather</button>
+<div class="panel panel-primary shadow">
+  <div class="panel-heading">Get a citys weather details</div>
+  <div class="panel-body">
+    <form id='weather-form'>
+      <label for="city-input">City</label><input type="text" name="city-input" value="" id="city-input">
+      <input type="submit" value="Get weather data" />
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-secondary shadow" id="weather-details" style="display: none;">
+  <div class="panel-heading" id="weather-details-heading"></div>
+  <div class="panel-body" id="weather-details-body">
+   
+  </div>
+  <div class="panel-footer" id='map'></div>
+</div>
